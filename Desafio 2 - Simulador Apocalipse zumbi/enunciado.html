@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Trabalho 2</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-fatec" class="anchor" href="#fatec" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ADS - Fatec Campinas</h3>
+
+<h3>
+<a id="user-content--algoritmos-e-programação-de-computadores" class="anchor" href="#algoritmos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Algoritmos e Lógica de Programação</h3>
+
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trabalho - Walking Dead</h1>
+<p>Prazo de entrega: <strong>03/12/2018 23:55</strong></p>
+<p><em>Professor:</em> Alexandre Ferreira<br>
+<em>e-mail: </em><a href="mailto:alexandre.ferreira16@fatec.sp.gov.br?Subject=FatecCampinas%20Trabalho2" target="_top">alexandre.ferreira16@fatec.sp.gov.br</a><br>
+
+<hr>
+
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+
+<p><a href="zumbis.jpeg" target="_blank"><img src="zumbis.jpeg" width="400" style="max-width:100%;"></a></p>
+
+<p>O apocalipse está sobre nós, e ele chegou na forma de um ataque de zumbis! Em preparação para o apocalipse zumbi, um grupo de cientistas estudou padrões de propagação e interação entre humanos e zumbis. Em um modelo simplificado, podemos representar os indivíduos do planeta em uma grade (matriz), e prever o destino de um individuo <code>X</code> após um dia baseando-se na sua vizinhança atual (veja figura abaixo).</p>
+
+<p><a href="img1.png" target="_blank"><img src="img1.png" width="100" style="max-width:100%;"></a></p>
+
+<p>Um indivíduo <code>X</code> que esteja numa posição <code>(i,j)</code> desta matriz, tem como vizinhos àqueles nas
+posições <code>(i-1,j-1)</code>, <code>(i-1,j)</code>, <code>(i-1,j+1)</code>, <code>(i,j-1)</code>, <code>(i,j+1)</code>, <code>(i+1,j-1)</code>, <code>(i+1,j)</code>, <code>(i+1,j+1)</code>
+que correspondem respectivamente aos vizinhos <code>v1</code>, <code>v2</code>, <code>v3</code>, <code>v4</code>, <code>v5</code>, <code>v6</code>, <code>v7</code>, e <code>v8</code> da figura.</p>
+
+<p>Os cientistas concluíram que as seguintes interações modelam a relação humano/zumbi:</p>
+
+<ul>
+<li>Se <code>X</code> for humano e possuir pelo menos um vizinho zumbi, então <code>X</code> é infectado e se torna um zumbi no dia seguinte;</li>
+<li>Se <code>X</code> for zumbi e possuir dois ou mais vizinhos humanos, ele é caçado e morto pelos humanos;</li>
+<li>Se <code>X</code> for zumbi e não possuir nenhum vizinho humano, ele morre de fome e fica vazio no dia seguinte;</li>
+<li>Se <code>X</code> estiver vazio e possuir <strong>exatamente</strong> dois vizinhos humanos, independente dos demais vizinhos serem zumbis ou vazio, então um humano nasce em <code>X</code> no dia seguinte.</li>
+<li>Se nenhuma das alternativas anteriores for verdade, então <code>X</code> permanece como está.</li>
+</ul>
+
+<p>O estado da população em um determinado dia é baseado apenas nas informações de vizinhança do <strong>estado da população no dia anterior</strong>.</p>
+
+<p>Veja os exemplos abaixo. Nestes exemplos <code>H</code> identifica um humano e <code>Z</code> um zumbi. Estes exemplos analisam apenas as mudanças em <code>X</code> de um dia para o outro. Como dito anteriormente, é preciso analisar individualmente cada posição da matriz para modificar o seu estado para o próximo estado da população.</p>
+
+<p><strong>Exemplo 1:</strong> Suponha que no estado atual, <code>X</code> é humano, e possui ao menos um vizinho zumbi. Portanto <code>X</code> será um zumbi no próximo dia.</p>
+
+<p><a href="img2.png" target="_blank"><img src="img2.png" width="250" style="max-width:100%;"></a></p>
+
+<p><strong>Exemplo 2:</strong> Suponha que no estado atual, <code>X</code> é um zumbi, e possui ao menos dois vizinhos humanos. No estado seguinte <code>X</code> será o vazio pois será morto.</p>
+
+<p><a href="img3.png" target="_blank"><img src="img3.png" width="250" style="max-width:100%;"></a></p>
+
+<p><strong>Exemplo 3:</strong>  Suponha que no estado atual, <code>X</code> está vazio. Como não possui exatamente dois vizinhos humanos, nada acontece.</p>
+
+<p><a href="img4.png" target="_blank"><img src="img4.png" width="250" style="max-width:100%;"></a></p>
+
+<p><strong>Exemplo 4:</strong>  Suponha que no estado atual, <code>X</code> está vazio, e possui exatamente dois vizinhos humanos. No dia seguinte nasce um humano em <code>X</code>.</p>
+
+<p><a href="img5.png" target="_blank"><img src="img5.png" width="250" style="max-width:100%;"></a></p>
+
+<p>Você deve ajudar os cientistas a preverem qual será o estado do planeta após a passagem de alguns dias. Para isso você deve criar um programa de simulação de interações humano/zumbi. O seu programa deverá ter um estado inicial do planeta carregado na forma de uma matriz, e então deverá atualizar o estado do planeta para cada dia transcorrido, onde um novo estado de um determinado dia, consiste em atualizar os valores de cada posição <code>(i,j)</code> considerando o estado do planeta no dia anterior.</p>
+
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+
+<p>O objetivo deste exercício é, dada a configuração inicial da população, simular o estado da população durante alguns dias utilizando as regras de interação humano/zumbi definidas acima. </p>
+
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+
+<p>A primeira linha da entrada é composta por dois inteiros, <code>m</code> e <code>n</code>, representando respectivamente o número de linhas e colunas da matriz.
+A segunda linha contém um inteiro <code>i</code>, representando o número de dias que desejamos simular o estado da população. À seguir temos cada uma das <code>m</code> linhas da matriz. Cada linha é composta por <code>n</code> inteiros, onde 0 representa o vazio, 1 um humano e 2  um zumbi. </p>
+
+<p><strong>Para efeitos de vizinhança iremos considerar que os elementos da coluna 0 são vizinhos dos elementos da coluna <code>n - 1</code>, e que os elementos da linha <code>0</code> são vizinhos dos elementos da linha <code>m - 1</code>.</strong> Você pode assumir que 0 ≤ <code>m</code>,<code>n</code> ≤ 50.</p>
+
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+
+<p>A saída deverá reportar o estado da população para cada um dos <code>i</code> dias transcorridos. Para cada estado à ser impresso, você deve primeiro imprimir <code>iteracao x</code>, substituindo <code>x</code> pelo número do dia, seguido pela impressão da matriz. Você deve imprimir inicialmente como <code>iteracao 0</code>, o estado inicial da população.</p>
+
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+
+<h6>
+<a id="user-content-teste-07" class="anchor" href="#teste-07" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 07</h6>
+
+<ul>
+<li>
+<p><a href="dados/arq07.in">Entrada</a></p>
+
+<pre><code>6 17
+6
+0 1 1 2 1 0 0 1 0 1 2 2 2 1 2 2 1
+2 1 1 0 1 2 1 2 2 0 0 1 2 0 2 2 2
+0 1 1 2 1 0 1 2 2 0 1 1 2 0 0 1 1
+0 2 2 0 1 1 1 0 2 2 0 2 1 1 0 2 2
+0 2 0 1 1 0 2 0 2 0 0 1 2 0 1 1 2
+0 1 1 1 0 2 1 2 1 0 1 2 1 2 0 1 2
+</code></pre>
+</li>
+<li>
+<p>Saída</p>
+
+<pre><code>iteracao 0
+01121001012221221
+21101212200120222
+01121012201120011
+02201110220211022
+02011020200120112
+01110212101212012
+iteracao 1
+02202002020002002
+02202020010200000
+02202020002201122
+10002221020022000
+00022000211200220
+02220020202020020
+iteracao 2
+00000000020000000
+00000000020001100
+02000020102002222
+20000022101020100
+00000000022200000
+00000000210000000
+iteracao 3
+00000000020001100
+00000000020002200
+00000001202000000
+00000000202000200
+00000000100200000
+00000000220000000
+iteracao 4
+00000000000002200
+00000000000000000
+00000002200000000
+00000001000000000
+00000000200000000
+00000000220001100
+iteracao 5
+00000000000000000
+00000000000000000
+00000002200000000
+00000002000000000
+00000000200001100
+00000000000002200
+</code></pre>
+</li>
+</ul>
+
+
+
+<h6>
+<a id="user-content-teste-08" class="anchor" href="#teste-08" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 08</h6>
+
+<ul>
+<li>
+<p><a href="dados/arq08.in">Entrada</a></p>
+
+<pre><code>11 5
+8
+1 0 1 2 2
+2 2 0 0 2
+1 1 1 2 0
+1 2 2 2 1
+2 2 1 1 1
+1 1 0 2 2
+2 1 2 1 2
+1 2 0 1 1
+1 1 2 1 2
+0 0 1 1 1
+1 1 0 0 0
+</code></pre>
+</li>
+<li>
+<p>Saída</p>
+
+<pre><code>iteracao 0
+10122
+22002
+11120
+12221
+22111
+11022
+21212
+12011
+11212
+00111
+11000
+iteracao 1
+20220
+00010
+22200
+20002
+00222
+22000
+02020
+20022
+22020
+00222
+21000
+iteracao 2
+20020
+00020
+00200
+00000
+00000
+00000
+00000
+00000
+00000
+00200
+22000
+iteracao 3
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+iteracao 4
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+iteracao 5
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+iteracao 6
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+iteracao 7
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+00000
+</code></pre>
+</li>
+</ul>
+
+
+
+<h6>
+<a id="user-content-teste-09" class="anchor" href="#teste-09" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 09</h6>
+
+<ul>
+<li>
+<p><a href="dados/arq09.in">Entrada</a></p>
+
+<pre><code>22 19
+9
+0 2 2 1 0 1 2 0 0 0 1 1 1 1 0 1 2 2 2
+2 2 2 0 1 1 0 0 2 0 0 0 1 1 1 0 2 1 2
+1 0 0 2 1 2 2 0 2 0 0 0 0 0 1 0 2 1 1
+1 1 1 2 1 0 2 2 1 1 2 2 2 0 2 1 1 1 1
+2 0 0 0 2 1 0 1 1 2 0 0 1 0 2 1 1 0 0
+1 2 0 0 2 2 1 0 2 2 1 0 2 2 1 2 2 2 0
+2 1 0 1 1 2 2 2 0 1 2 1 0 2 2 1 0 2 0
+0 2 0 2 0 2 0 2 0 2 1 1 0 1 0 1 2 0 1
+1 0 0 2 2 2 0 2 1 1 1 2 0 1 1 2 0 2 1
+1 0 1 0 2 0 1 0 2 2 1 2 1 0 2 2 1 0 2
+0 1 2 1 2 2 2 2 2 0 0 1 0 2 1 2 2 2 1
+1 1 1 2 1 1 1 1 0 1 2 0 1 2 1 1 1 0 2
+0 0 0 2 2 2 2 1 1 0 1 1 2 1 2 1 0 0 2
+2 0 2 1 2 1 1 0 2 0 2 0 2 0 0 1 2 2 0
+2 2 2 2 2 2 2 1 2 0 2 2 0 2 1 2 0 1 1
+0 0 1 0 0 2 0 1 1 2 2 1 0 0 2 0 1 1 1
+1 1 2 2 1 2 0 1 0 0 0 0 2 1 1 0 1 1 2
+2 2 0 2 2 2 2 0 0 2 0 0 1 0 1 1 2 0 2
+0 2 2 0 2 1 2 2 2 1 1 1 2 0 0 2 2 2 2
+2 2 1 0 1 1 0 2 1 2 2 0 1 2 0 0 1 0 0
+0 2 0 1 2 1 0 0 2 1 2 2 0 1 0 1 2 1 2
+2 0 0 0 0 1 0 1 1 2 0 2 2 2 0 1 1 0 0
+</code></pre>
+</li>
+<li>
+<p>Saída</p>
+
+<pre><code>iteracao 0
+0221012000111101222
+2220110020001110212
+1002122020000010211
+1112102211222021111
+2000210112001021100
+1200221022102212220
+2101122201210221020
+0202020202110101201
+1002220211120112021
+1010201022121022102
+0121222220010212221
+1112111101201211102
+0002222110112121002
+2021211020202001220
+2222222120220212011
+0010020112210020111
+1122120100002110112
+2202222002001011202
+0220212221112002222
+2210110212201200100
+0201210021220101212
+2000010112022201100
+iteracao 1
+0022020111222202002
+0220221000101110020
+2010202001001020022
+2220200022222102222
+0011020220112102200
+2011002000200020020
+0212202202020002121
+0010120200220202012
+2002020022200220102
+2021202100202000200
+0202000001020020002
+2220222202002022210
+1000000220220202002
+2022022001010102001
+0200000200220220022
+0021020222221000222
+2200221200010220220
+0002000010002022010
+0221020202220010020
+0220220220002011210
+0212020002221202022
+0011020220000002210
+iteracao 2
+0000021222000012002
+0220022000202220000
+0020002002102000000
+0000200020000210000
+0122100000220210000
+2022100000011020000
+0020000000000002202
+0120220000000000020
+0010120020000000212
+0022202210200000200
+0002000012000000002
+2200000002000000221
+2000000020021200010
+0000000002121200002
+0000000000000020022
+0022020200202000000
+0000222000021200220
+0002000120002022020
+0022000202000120001
+0201200000002022020
+0020000000022010000
+0122000001000000220
+iteracao 3
+0000022222000022000
+0000022000200220000
+0000000002200000000
+0000200000000021000
+0220210000201021000
+2020210000022120000
+0020000000011000000
+0201220000000000020
+0121220020000000222
+0020200021000000200
+0000000120000000002
+2000000002000000202
+2000000000002000021
+0000000002202000002
+0000000000010000000
+0000000000002000000
+0000002000022200000
+0000000220000120020
+0022000200000220002
+0002200000002102020
+0000000000000020000
+0220000002000111000
+iteracao 4
+0000000000000100000
+0000000000000000000
+0000000000000000000
+0000200000000002100
+0000021000002102100
+0000021000000200000
+0020100000022100000
+0202000000011000000
+0202000020000000000
+0000200002000000000
+0000000200000000000
+2000000000000000002
+2000000000000000022
+0000000000202000002
+0000000000020000000
+0000000000002000000
+0000000000002200000
+0000000000000220000
+0000000000001000000
+0000000000002200000
+0000000000001001000
+0000000000000222000
+iteracao 5
+0000000000000200000
+0000000000000000000
+0000000000000000000
+0000000000000000210
+0000002100002200210
+0000002100001010000
+0000210000000200000
+0002000000022100000
+0000000000011000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000200000
+0000000000002000000
+0000000000010000000
+0000000000002002000
+0000000000001002000
+iteracao 6
+0000000000000200000
+0000000000000000000
+0000000000000000000
+0000000000000000021
+0000000210002000021
+0000000210002120000
+0000221000001010000
+0000000000000200000
+0000000000022100000
+0000000000011000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000002000000
+0000000000020000000
+0000000000010000000
+0000000000002000000
+iteracao 7
+0000000000000000000
+0000000000000000000
+0000000000000000000
+1000000000000000002
+1000000021002000002
+0000000021000200000
+0000022100002020000
+0000000000001010000
+0000000000000200000
+0000000000022100000
+0000000000011000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000020000000
+0000000000020000000
+0000000000002000000
+iteracao 8
+0000000000000000000
+0000000000000000000
+0000000000000000000
+2100000000000000000
+2100000002100000000
+0000000002100000000
+0000002210002120000
+0000000000002120000
+0000000000001010000
+0000000000000200000
+0000000000022100000
+0000000000011000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+0000000000000000000
+</code></pre>
+</li>
+</ul>
+
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+
+<ul>
+</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>trab2.c</code> e em linguagem C, o qual deve ser enviado por email para o professor.</li>
+<!--<li>Para a realização dos testes, a compilação dos programas desenvolvidos em C irá considerar o comando:<br>
+<code>gcc -std=c99 -pedantic -Wall -o trabalho trabalho.c</code>.
+</li>-->
+<li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA.</li>
+<li>Pode ser feito em dupla.</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+
+<h2>
+<a id="user-content-critérios-importantes" class="anchor" href="#crit%C3%A9rios-importantes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Critérios importantes</h2>
+
+<p>Independentemente dos resultados dos testes, o não cumprimento
+dos critérios abaixo implicará em nota zero neste trabalho.</p>
+
+<ul>
+<li>O único <em>header</em> aceito para essa tarefa é: <code>stdio.h</code>.</li>
+</ul>
+
+    </article>
+</body>
+</html>
