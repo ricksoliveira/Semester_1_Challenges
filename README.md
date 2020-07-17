@@ -1,3 +1,3 @@
 # Semestre_1_Desafios
 
-Conteúdo e resolução dos desafios 1 e 2 são os arquivos trab1.c e trab2.c respectivamente
+Content and resolutions of challanges 1 and 2 are file trab1.c and trab2.c respectively
